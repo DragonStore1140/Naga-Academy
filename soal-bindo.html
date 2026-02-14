@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal Bahasa Indonesia - Academy Naga</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+    // Validasi login sebelum tampil
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedUser = localStorage.getItem('academyNagaUser');
+        if (!savedUser) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        const user = JSON.parse(savedUser);
+        if (!user.isLoggedIn || !user.name || !user.class) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        // Update header
+        const headerName = document.getElementById('headerName');
+        const headerClass = document.getElementById('headerClass');
+        
+        if (headerName) headerName.textContent = user.name;
+        if (headerClass) headerClass.textContent = user.class;
+    });
+    </script>
+</head>
+<body>
+<header>
+    <!-- Settings kiri -->
+    <button class="settings-btn" onclick="openSettings()"><i class="fas fa-cog"></i></button>
+    
+    <!-- Profile TENGAH -->
+    <div class="header-left">
+        <img src="gambar/profile.png" alt="Profile" class="profile-icon" id="headerProfileImg" onerror="this.src='https://via.placeholder.com/45x45?text=User'">
+        <div class="user-info">
+            <span class="user-name" id="headerName">-</span>
+            <span class="user-class" id="headerClass">-</span>
+        </div>
+    </div>
+    
+    <!-- Spacer invisible -->
+    <div class="header-spacer"></div>
+    
+    <!-- Icon kanan -->
+    <div class="header-right">
+        <img src="gambar/icon.png" alt="Academy Naga" class="academy-icon" onerror="this.src='https://via.placeholder.com/45x45?text=Naga'">
+    </div>
+</header>
+
+    <main>
+        <div class="soal-container">
+            <div class="soal-header">
+                <div class="timer" id="timer">30:00</div>
+                <div class="progress">
+                    Soal <span id="currentQuestion">1</span> dari <span id="totalQuestions">25</span>
+                </div>
+            </div>
+            
+            <!-- QUESTION NAVIGATOR -->
+            <div class="question-navigator" id="questionNavigator">
+                <div class="navigator-title">
+                    <span>Navigasi Soal</span>
+                    <div class="navigator-info">
+                        <div class="info-item">
+                            <span class="info-dot" style="background: white; border: 2px solid #ddd;"></span>
+                            <span>Belum</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-dot" style="background: #4CAF50;"></span>
+                            <span>Terjawab</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-dot" style="background: #ffc107;"></span>
+                            <span>Sebagian</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-dot" style="background: #ff9800;"></span>
+                            <span>Ragu</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigator-grid">
+                    <!-- Akan diisi JavaScript -->
+                </div>
+            </div>
+            
+            <div id="soalContainer"></div>
+        </div>
+    </main>
+
+    <!-- Modal Settings -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSettings()">&times;</span>
+            <h2>Pengaturan</h2>
+            
+            <div class="settings-section">
+                <h3><i class="fas fa-id-card"></i> Data Kamu</h3>
+                <div class="settings-option">
+                    <label>Nama:</label>
+                    <span class="data-display" id="settingsNameDisplay">-</span>
+                </div>
+                <div class="settings-option">
+                    <label>Kelas:</label>
+                    <span class="data-display" id="settingsClassDisplay">-</span>
+                </div>
+                <div class="settings-option">
+                    <label>Password:</label>
+                    <span class="data-display">••••••• (Rahasia)</span>
+                </div>
+            </div>
+
+            <div class="settings-divider"></div>
+
+            <div class="settings-section">
+                <h3><i class="fas fa-palette"></i> Tampilan</h3>
+                <div class="settings-option">
+                    <label for="theme">Tema:</label>
+                    <select id="theme" onchange="changeTheme(this.value)">
+                        <option value="light">Terang</option>
+                        <option value="dark">Gelap</option>
+                    </select>
+                </div>
+                <div class="settings-option">
+                    <label for="fontSize">Ukuran Font:</label>
+                    <select id="fontSize" onchange="changeFontSize(this.value)">
+                        <option value="normal">Normal</option>
+                        <option value="large">Besar</option>
+                        <option value="larger">Lebih Besar</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hasil Ujian -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content result-modal">
+            <span class="close" onclick="closeResultModal()">&times;</span>
+            <h2>Hasil Ujian</h2>
+            <div id="resultContent" class="result-content"></div>
+            
+            <!-- BUTTON KEMBALI KE LOBBY -->
+            <div class="result-actions">
+                <button class="lobby-btn" onclick="backToLobby()">
+                    <span class="lobby-icon"><i class="fas fa-home"></i></span>
+                    <span class="lobby-text">Kembali ke Lobby</span>
+                    <span class="lobby-icon"><i class="fas fa-arrow-right"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="database/soal-bindo.js"></script>
+    <script src="script.js"></script>
+    <script>
+    // Load profile picture setiap halaman dibuka
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedImage = localStorage.getItem('userProfileImage');
+        const headerImg = document.getElementById('headerProfileImg');
+        
+        if (savedImage && headerImg) {
+            headerImg.src = savedImage;
+        }
+    });
+    </script>
+</body>
+</html>
