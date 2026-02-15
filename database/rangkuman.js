@@ -568,7 +568,7 @@ const rangkumanMtk = [
         `
     },
     {
-        judul: "Persamaan & Pertidaksamaan Linear Satu Variabel",
+        judul: "Persamaan Linear Satu Variabel",
         konten: `
             <h3>📌 Persamaan Linear Satu Variabel (PLSV)</h3>
             <p>Bentuk umum: ax + b = c, dengan a ≠ 0</p>
@@ -586,23 +586,6 @@ const rangkumanMtk = [
                 <li>2x = 7 - 3</li>
                 <li>2x = 4</li>
                 <li>x = 4/2 = 2</li>
-            </ul>
-            
-            <h3>📌 Pertidaksamaan Linear Satu Variabel (PtLSV)</h3>
-            <p>Bentuk umum: ax + b < c, ax + b > c, ax + b ≤ c, ax + b ≥ c</p>
-            
-            <h3>⚠️ Aturan Penting</h3>
-            <ul>
-                <li>Jika kedua ruas dikali/dibagi bilangan positif, tanda tetap</li>
-                <li>Jika kedua ruas dikali/dibagi bilangan negatif, tanda berbalik</li>
-            </ul>
-            
-            <h3>📝 Contoh</h3>
-            <p>2x - 3 < 5</p>
-            <ul>
-                <li>2x < 5 + 3</li>
-                <li>2x < 8</li>
-                <li>x < 4</li>
             </ul>
         `
     },
