@@ -1497,4 +1497,32 @@ body.dark .sesi-selector select {
         width: 100%;
         min-width: auto;
     }
+    
+    /* ========== LOGOUT BUTTON ========== */
+.logout-btn {
+    background: linear-gradient(145deg, #dc3545, #c82333);
+    color: white;
+    border: 2px solid #ffc107;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(145deg, #c82333, #b11f2b);
+    transform: scale(1.02);
+    border-color: white;
+}
+
+.logout-btn i {
+    font-size: 1.2rem;
+}
 }

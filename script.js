@@ -961,3 +961,33 @@ function toggleBookmark() {
     showQuestion(); // Refresh untuk update tombol
     renderQuestionNavigator(); // Update navigator
 }
+
+// ========== LOGOUT FUNCTION ==========
+function handleLogout() {
+    // Konfirmasi dulu biar gak kehapus
+    const confirmLogout = confirm('Yakin mau logout? Data login akan dihapus.');
+    
+    if (!confirmLogout) return;
+    
+    // Hapus data user dari localStorage
+    localStorage.removeItem('academyNagaUser');
+    
+    // Reset currentUser
+    currentUser = {
+        name: "",
+        class: "",
+        isLoggedIn: false
+    };
+    
+    // Tutup modal settings
+    closeSettings();
+    
+    // Tampilkan login modal
+    showLoginModal();
+    
+    // Reset header
+    document.getElementById('headerName').textContent = '-';
+    document.getElementById('headerClass').textContent = '-';
+    
+    alert('Kamu berhasil logout!');
+}
